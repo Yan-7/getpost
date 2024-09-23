@@ -1,17 +1,19 @@
 const express  = require('express');
 const app = express();
 
-app.use(express.urlencoded({ extended: true}))
-app.use(express.json);
-
-app.get('/tacos', (req,res) => {
-    res.send('GET /tacos response')
-})
-
-app.post('/tacos', (req,res) => {
-    res.send('this is a post response')
-})
-app.listen(3000, () => {
-    console.log('listening on port 3000');
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://127.0.0.1:27017/test')
+.then(()=> {
+    console.log('connection started to mongoose');
     
 })
+
+const movieSchema = new mongoose.Schema({
+    title: String,
+    year: Number,
+    rating: Number
+})
+
+const movie = mongoose.model('Movie', movieSchema);
+const amadeus = new movie('Amadues',1203,4.2);
+
